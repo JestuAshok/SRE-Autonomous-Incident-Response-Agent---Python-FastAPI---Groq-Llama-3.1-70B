@@ -1,0 +1,13 @@
+2026-09-01T08:00:00.000Z [INFO] [dynamodb-metadata] [coordinator] c.a.d.MetadataServer - Cluster topology stable across 3 availability zones in us-east-1. 1,420 partitions assigned.
+2026-09-01T08:05:00.000Z [INFO] [dynamodb-metadata] [lease-worker-1] c.a.d.LeaseCoordinator - Heartbeat lease renewal cycle completed for 12,000 storage table replicas.
+2026-09-01T08:12:00.000Z [WARN] [dynamodb-metadata] [network-health] c.a.d.NetworkMonitor - Transient cross-rack latency packet delay observed on internal mesh link. RTT: 480ms (normal: 0.5ms)
+2026-09-01T08:14:10.120Z [ERROR] [dynamodb-metadata] [lease-worker-2] c.a.d.LeaseCoordinator - Failed to renew storage membership table lease: timeout after 5000ms
+com.amazonaws.dynamodb.exception.MembershipLeaseTimeoutException: Storage replica node partition-14 failed to renew membership table lease within 5000ms timeout
+	at com.amazonaws.dynamodb.metadata.LeaseCoordinator.renewLease(LeaseCoordinator.java:92)
+	at com.amazonaws.dynamodb.storage.StorageRouter.acquirePartitionLock(StorageRouter.java:140)
+2026-09-01T08:14:22.450Z [ERROR] [dynamodb-metadata] [lease-worker-3] c.a.d.LeaseCoordinator - Failed to renew storage membership table lease: timeout after 5000ms
+com.amazonaws.dynamodb.exception.MembershipLeaseTimeoutException: Storage replica node partition-15 failed to renew membership table lease within 5000ms timeout
+	at com.amazonaws.dynamodb.metadata.LeaseCoordinator.renewLease(LeaseCoordinator.java:92)
+	at com.amazonaws.dynamodb.storage.StorageRouter.acquirePartitionLock(StorageRouter.java:140)
+2026-09-01T08:14:40.900Z [ERROR] [dynamodb-metadata] [pool-manager] c.a.d.ConnectionManager - HikariPool: Connection pool exhausted, 100/100 active connections in pool. Requests queuing.
+2026-09-01T08:15:00.100Z [ERROR] [dynamodb-metadata] [telemetry] c.a.d.HealthService - DynamoDB metadata partition unavailable: P99 latency exceeded 8000ms across us-east-1

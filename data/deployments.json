@@ -1,0 +1,225 @@
+[
+  {
+    "id": "dep-checkout-240",
+    "service": "checkout-service",
+    "version": "v2.4.0",
+    "previous_version": "v2.3.9",
+    "timestamp": "2026-09-01T10:14:00Z",
+    "status": "COMPLETED",
+    "commit_hash": "a9f4c3b",
+    "author": "alice@company.com",
+    "branch": "main",
+    "commit_message": "feat: add digital wallet checkout support and payment method validation",
+    "rollback_version": "v2.3.9",
+    "changes": [
+      "Added PaymentMethodValidator.validate() for digital wallet payloads",
+      "Updated CheckoutProcessor to invoke validation chain",
+      "Added Apple Pay and Google Pay support"
+    ]
+  },
+  {
+    "id": "dep-checkout-239",
+    "service": "checkout-service",
+    "version": "v2.3.9",
+    "previous_version": "v2.3.8",
+    "timestamp": "2026-08-30T14:20:00Z",
+    "status": "COMPLETED",
+    "commit_hash": "c2198fa",
+    "author": "alice@company.com",
+    "branch": "main",
+    "commit_message": "fix: sanitize invoice notes parameter in checkout request",
+    "rollback_version": "v2.3.8",
+    "changes": [
+      "Escaped HTML entities in invoice notes",
+      "Added validation tests"
+    ]
+  },
+  {
+    "id": "dep-crowdstrike-291",
+    "service": "crowdstrike-sensor",
+    "version": "channel-file-291",
+    "previous_version": "channel-file-290",
+    "timestamp": "2026-09-01T04:09:00Z",
+    "status": "COMPLETED",
+    "commit_hash": "cs2910a",
+    "author": "sensor-release@crowdstrike.com",
+    "branch": "main",
+    "commit_message": "feat: release Channel File 291 with 21 input validation slots for rapid detection",
+    "rollback_version": "channel-file-290",
+    "changes": [
+      "csagent.sys: ChannelFile291 content configuration definition",
+      "ChannelManager.sys: Added 21 input validation slots"
+    ]
+  },
+  {
+    "id": "dep-cloudflare-219",
+    "service": "cloudflare-edge",
+    "version": "waf-rules-v2.19.0",
+    "previous_version": "waf-rules-v2.18.9",
+    "timestamp": "2026-09-01T12:00:00Z",
+    "status": "COMPLETED",
+    "commit_hash": "cf91a02",
+    "author": "waf-team@cloudflare.com",
+    "branch": "main",
+    "commit_message": "feat: deploy managed WAF rule set with regex rule 100018 for XSS/SQLi mitigation",
+    "rollback_version": "waf-rules-v2.18.9",
+    "changes": [
+      "ManagedRulesEngine.lua: Deploy new XSS and SQLi managed detection rules",
+      "ruleset_100018: Add regex match clause .*.*=.*"
+    ]
+  },
+  {
+    "id": "dep-dynamodb-420",
+    "service": "dynamodb-metadata",
+    "version": "v4.2.0",
+    "previous_version": "v4.1.9",
+    "timestamp": "2026-08-27T02:00:00Z",
+    "status": "COMPLETED",
+    "commit_hash": "aws991a",
+    "author": "dynamo-infra@aws.internal",
+    "branch": "main",
+    "commit_message": "chore: stable metadata coordinator release across us-east-1",
+    "rollback_version": "v4.1.9",
+    "changes": [
+      "StorageRouter.java: Stable partition routing",
+      "LeaseCoordinator.java: Standard heartbeat timeout"
+    ]
+  },
+  {
+    "id": "dep-auth-182",
+    "service": "auth-service",
+    "version": "v1.8.2",
+    "previous_version": "v1.8.1",
+    "timestamp": "2026-08-31T18:00:00Z",
+    "status": "COMPLETED",
+    "commit_hash": "7c82bf1",
+    "author": "charlie@company.com",
+    "branch": "main",
+    "commit_message": "chore: token refresh rate limit adjustment",
+    "rollback_version": "v1.8.1",
+    "changes": [
+      "Tune Redis token cache TTL",
+      "Add prometheus counter for token refreshes"
+    ]
+  },
+  {
+    "id": "dep-inventory-310",
+    "service": "inventory-service",
+    "version": "v3.1.0",
+    "previous_version": "v3.0.9",
+    "timestamp": "2026-09-01T10:14:00Z",
+    "status": "COMPLETED",
+    "commit_hash": "f8a201c",
+    "author": "warehouse-team@company.com",
+    "branch": "main",
+    "commit_message": "feat: support warehouse_zone column in inventory queries",
+    "rollback_version": "v3.0.9",
+    "changes": [
+      "InventoryRepository.go: Query warehouse_zone column",
+      "StockService.go: Update availability check"
+    ]
+  },
+  {
+    "id": "dep-notification-125",
+    "service": "notification-service",
+    "version": "v1.2.5",
+    "previous_version": "v1.2.4",
+    "timestamp": "2026-09-01T10:14:00Z",
+    "status": "COMPLETED",
+    "commit_hash": "d1c94e7",
+    "author": "email-eng@company.com",
+    "branch": "main",
+    "commit_message": "feat: add customer loyalty badge to order email template",
+    "rollback_version": "v1.2.4",
+    "changes": [
+      "TemplateEngine.ts: Email notification metadata parsing",
+      "NotificationDispatcher.ts: Pass loyalty attributes"
+    ]
+  },
+  {
+    "id": "dep-payment-152",
+    "service": "payment-gateway",
+    "version": "v1.5.2",
+    "previous_version": "v1.5.1",
+    "timestamp": "2026-09-01T10:15:00Z",
+    "status": "COMPLETED",
+    "commit_hash": "e3d119a",
+    "author": "bob@company.com",
+    "branch": "main",
+    "commit_message": "fix: update PayPal SDK timeout configuration",
+    "rollback_version": "v1.5.1",
+    "changes": [
+      "Bumped paypal-rest-sdk to 1.14.0",
+      "Increased circuit breaker timeout to 3000ms"
+    ]
+  },
+  {
+    "id": "dep-user-201",
+    "service": "user-service",
+    "version": "v2.0.1",
+    "previous_version": "v2.0.0",
+    "timestamp": "2026-09-01T10:35:00Z",
+    "status": "COMPLETED",
+    "commit_hash": "usr0192",
+    "author": "alex@company.com",
+    "branch": "main",
+    "commit_message": "chore: update documentation, linter rules, and README",
+    "rollback_version": "v2.0.0",
+    "changes": [
+      "README.md: Update API contract docs",
+      ".eslintrc.json: Add strict typing rule"
+    ]
+  },
+  {
+    "id": "dep-billing-140",
+    "service": "billing-service",
+    "version": "v1.4.0",
+    "previous_version": "v1.3.9",
+    "timestamp": "2026-09-01T10:30:00Z",
+    "status": "COMPLETED",
+    "commit_hash": "bil8821",
+    "author": "sam@company.com",
+    "branch": "main",
+    "commit_message": "chore: upgrade telemetry formatting and metric labels",
+    "rollback_version": "v1.3.9",
+    "changes": [
+      "TelemetryFormatter.java: Clean json logs",
+      "pom.xml: Bump prometheus client library"
+    ]
+  },
+  {
+    "id": "dep-webstore-120",
+    "service": "web-store",
+    "version": "v1.2.0",
+    "previous_version": "v1.1.9",
+    "timestamp": "2026-09-01T11:00:00Z",
+    "status": "COMPLETED",
+    "commit_hash": "f4b8102",
+    "author": "dave@shopping.com",
+    "branch": "main",
+    "commit_message": "feat: change Buy Now button to red and add discount promo code field",
+    "rollback_version": "v1.1.9",
+    "changes": [
+      "Updated CartPage.js to read discount_code from user input",
+      "Changed checkout button styling to bright red",
+      "Added promotional banner on website header"
+    ]
+  },
+  {
+    "id": "dep-webstore-119",
+    "service": "web-store",
+    "version": "v1.1.9",
+    "previous_version": "v1.1.8",
+    "timestamp": "2026-08-30T10:00:00Z",
+    "status": "COMPLETED",
+    "commit_hash": "b11a942",
+    "author": "dave@shopping.com",
+    "branch": "main",
+    "commit_message": "chore: stable website release with standard checkout flow",
+    "rollback_version": "v1.1.8",
+    "changes": [
+      "Stable cart checkout flow",
+      "Standard product page layout"
+    ]
+  }
+]

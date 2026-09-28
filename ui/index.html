@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SRE Autonomous Incident Response Agent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F6F8;
+    --surface:#FFFFFF;
+    --border:#E2E5EA;
+    --text:#14181F;
+    --text-soft:#5B6472;
+    --accent:#0E7C86;
+    --accent-soft:#E4F1F1;
+    --approve:#1D7A4C;
+    --approve-soft:#E7F4EC;
+    --danger:#B0311B;
+    --danger-soft:#FBEAE5;
+    --warn:#B7791F;
+    --warn-soft:#FBF1DF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+
+  .app{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    min-height:100vh;
+  }
+
+  /* Top bar spans full width visually via header row */
+  header{
+    grid-column:1/3;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 28px;
+    border-bottom:1px solid var(--border);
+    background:var(--surface);
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .brand-icon{
+    width:36px;
+    height:36px;
+    border-radius:8px;
+    background:linear-gradient(135deg, #0E7C86, #14B8A6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#FFFFFF;
+    box-shadow:0 2px 6px rgba(14,124,134,0.3);
+    flex-shrink:0;
+  }
+  .brand-text{
+    display:flex;
+    flex-direction:column;
+  }
+  .brand-title{
+    font-size:15px;
+    font-weight:700;
+    color:var(--text);
+    line-height:1.2;
+  }
+  .brand-subtitle{
+    font-size:11px;
+    font-weight:400;
+    color:var(--text-soft);
+    margin-top:2px;
+  }
+  .header-right{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .status-pill{
+    font-size:12px;
+    color:var(--text-soft);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--bg);
+    border:1px solid var(--border);
+    padding:5px 12px;
+    border-radius:20px;
+    font-weight:500;
+  }
+  .status-pill .pulse{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--approve);
+    box-shadow:0 0 0 3px var(--approve-soft);
+  }
+  .btn-investigate{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    font-weight:600;
+    padding:7px 14px;
+    border-radius:6px;
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    box-shadow:0 1px 3px rgba(14,124,134,0.2);
+    transition:opacity 0.15s;
+  }
+  .btn-investigate:hover{opacity:0.9;}
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    transition:opacity 0.15s;
+  }
+  .btn-new:hover{opacity:0.9;}
+
+  /* Sidebar */
+  aside{
+    border-right:1px solid var(--border);
+    background:var(--surface);
+    padding:20px 0;
+    overflow-y:auto;
+  }
+  .sidebar-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px 12px;
+  }
+  .sidebar-label{
+    font-size:12px;
+    color:var(--text-soft);
+    font-weight:500;
+  }
+  .search-box{
+    padding:0 16px 12px;
+  }
+  .search-box input{
+    width:100%;
+    padding:6px 10px;
+    font-size:12px;
+    border:1px solid var(--border);
+    border-radius:5px;
+    background:#FAFAFB;
+    font-family:'Inter',sans-serif;
+    outline:none;
+  }
+  .search-box input:focus{
+    border-color:var(--accent);
+    background:#fff;
+  }
+  .incident-item{
+    padding:14px 20px;
+    border-left:3px solid transparent;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    transition:background 0.15s;
+  }
+  .incident-item.active{
+    border-left-color:var(--accent);
+    background:var(--accent-soft);
+  }
+  .incident-item:not(.active):hover{
+    background:#FAFAFB;
+  }
+  .incident-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .incident-id{
+    font-size:13px;
+    font-weight:600;
+  }
+  .sev{
+    font-size:11px;
+    padding:2px 7px;
+    border-radius:3px;
+    font-weight:500;
+  }
+  .sev-1, .sev-critical{background:var(--danger-soft);color:var(--danger);}
+  .sev-2, .sev-high{background:var(--warn-soft);color:var(--warn);}
+  .sev-3, .sev-medium, .sev-low{background:#EEF0F2;color:var(--text-soft);}
+  .incident-title{
+    font-size:13px;
+    color:var(--text-soft);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .incident-time{
+    font-size:11px;
+    color:var(--text-soft);
+    opacity:0.7;
+  }
+
+  /* Main panel */
+  main{
+    padding:32px 40px;
+    max-width:920px;
+    overflow-y:auto;
+  }
+  .incident-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:28px;
+  }
+  .incident-header h1{
+    font-size:22px;
+    margin:0 0 6px;
+    font-weight:600;
+  }
+  .incident-header p{
+    margin:0;
+    color:var(--text-soft);
+    font-size:14px;
+  }
+  .confidence-box{
+    text-align:right;
+    min-width:140px;
+  }
+  .confidence-value{
+    font-size:28px;
+    font-weight:700;
+    color:var(--accent);
+    line-height:1;
+  }
+  .confidence-label{
+    font-size:12px;
+    color:var(--text-soft);
+    margin-top:4px;
+  }
+  .confidence-bar{
+    width:140px;
+    height:5px;
+    background:var(--border);
+    border-radius:3px;
+    margin-top:8px;
+    overflow:hidden;
+  }
+  .confidence-fill{
+    width:82%;
+    height:100%;
+    background:var(--accent);
+    transition:width 0.3s ease;
+  }
+
+  section{
+    margin-bottom:28px;
+  }
+  .section-title{
+    font-size:13px;
+    font-weight:600;
+    color:var(--text);
+    margin-bottom:14px;
+  }
+
+  /* Evidence trail — signature element */
+  .trail{
+    position:relative;
+    padding-left:28px;
+  }
+  .trail::before{
+    content:"";
+    position:absolute;
+    left:7px;
+    top:6px;
+    bottom:6px;
+    width:2px;
+    background:var(--border);
+  }
+  .trail-item{
+    position:relative;
+    padding-bottom:20px;
+  }
+  .trail-item:last-child{padding-bottom:0;}
+  .trail-item::before{
+    content:"";
+    position:absolute;
+    left:-28px;
+    top:3px;
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:var(--surface);
+    border:2px solid var(--accent);
+  }
+  .trail-kind{
+    font-size:11px;
+    color:var(--text-soft);
+    margin-bottom:3px;
+    font-weight:500;
+  }
+  .trail-body{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:12px 14px;
+  }
+  .trail-body .line1{
+    font-size:13px;
+    margin-bottom:4px;
+    word-break:break-word;
+  }
+  .trail-body .line2{
+    font-size:12px;
+    color:var(--text-soft);
+  }
+
+  /* Recommended action */
+  .action-box{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:20px;
+  }
+  .action-box .label{
+    font-size:12px;
+    color:var(--text-soft);
+    margin-bottom:6px;
+  }
+  .action-box .command{
+    font-size:14px;
+    margin-bottom:14px;
+    background:#FAFAFB;
+    padding:8px 12px;
+    border-radius:4px;
+    border:1px solid var(--border);
+    color:var(--text);
+    word-break:break-all;
+  }
+  .risk-tag{
+    display:inline-block;
+    font-size:11px;
+    padding:2px 8px;
+    border-radius:3px;
+    background:var(--warn-soft);
+    color:var(--warn);
+    margin-left:8px;
+    font-weight:500;
+  }
+  .risk-tag.executed{
+    background:var(--approve-soft);
+    color:var(--approve);
+  }
+  .risk-tag.rejected{
+    background:var(--danger-soft);
+    color:var(--danger);
+  }
+  .btn-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  button{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    font-weight:500;
+    padding:9px 18px;
+    border-radius:6px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:background 0.15s, border-color 0.15s, opacity 0.15s;
+  }
+  .btn-approve{
+    background:var(--approve);
+    color:#fff;
+  }
+  .btn-approve:hover{opacity:0.9;}
+  .btn-reject{
+    background:var(--surface);
+    color:var(--danger);
+    border-color:var(--danger);
+  }
+  .btn-reject:hover{background:var(--danger-soft);}
+  .btn-details{
+    background:transparent;
+    color:var(--text-soft);
+    border-color:var(--border);
+  }
+  .btn-details:hover{background:#FAFAFB;color:var(--text);}
+
+  /* Audit log */
+  .audit{
+    font-size:13px;
+    color:var(--text-soft);
+    border-top:1px solid var(--border);
+    padding-top:14px;
+    margin-top:28px;
+  }
+  .audit-item{
+    display:flex;
+    justify-content:space-between;
+    padding:6px 0;
+  }
+
+  /* Modal */
+  .modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(20,24,31,0.4);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+  }
+  .modal-overlay.hidden{display:none;}
+  .modal-box{
+    background:var(--surface);
+    border-radius:8px;
+    width:460px;
+    max-width:90vw;
+    border:1px solid var(--border);
+    padding:24px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  }
+  .modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:16px;
+  }
+  .modal-header h3{
+    margin:0;
+    font-size:16px;
+    font-weight:600;
+  }
+  .btn-close{
+    background:none;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    color:var(--text-soft);
+    padding:0;
+    line-height:1;
+  }
+  .form-group{
+    margin-bottom:16px;
+  }
+  .form-group label{
+    display:block;
+    font-size:12px;
+    font-weight:500;
+    color:var(--text-soft);
+    margin-bottom:6px;
+  }
+  .form-control{
+    width:100%;
+    padding:8px 12px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    font-size:13px;
+    font-family:'Inter',sans-serif;
+    outline:none;
+    background:var(--surface);
+  }
+  .form-control:focus{
+    border-color:var(--accent);
+  }
+  /* Interactive Telemetry Graph */
+  .telemetry-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-top: 16px;
+  }
+  .telemetry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .telemetry-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .telemetry-legend {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 11px;
+    color: var(--text-soft);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .graph-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+  .graph-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .graph-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(20, 24, 31, 0.95);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 1.4;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    display: none;
+    z-index: 10;
+    transform: translate(-50%, -120%);
+    white-space: nowrap;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* Live SRE Rollout Console */
+  .sre-console {
+    background: #0B0F17;
+    border: 1px solid #1E293B;
+    border-radius: 8px;
+    margin-top: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  }
+  .console-topbar {
+    background: #141B26;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1E293B;
+  }
+  .console-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .console-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .console-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: #94A3B8;
+  }
+  .console-body {
+    padding: 12px 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    max-height: 260px;
+    overflow-y: auto;
+    color: #E2E8F0;
+    background: #0B0F17;
+  }
+  .console-line {
+    opacity: 0;
+    animation: fadeInLine 0.22s forwards ease;
+    word-break: break-word;
+    margin-bottom: 2px;
+  }
+  @keyframes fadeInLine {
+    to { opacity: 1; }
+  }
+  .console-footer {
+    background: #111722;
+    padding: 9px 16px;
+    border-top: 1px solid #1E293B;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: #94A3B8;
+  }
+  .badge-health {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header>
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+          <polyline points="2 17 12 22 22 17"></polyline>
+          <polyline points="2 12 12 17 22 12"></polyline>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="brand-title">SRE Autonomous Incident Response Agent</div>
+        <div class="brand-subtitle">Real-time Correlation • Root Cause Diagnostics • Human-in-the-Loop Action Approval</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div style="position:relative;">
+        <button id="btnNightMode" class="btn-details" style="display:inline-flex; align-items:center; gap:6px; font-size:12px; padding:6px 12px; background:#F5F6F8; border-color:#E2E5EA; cursor:pointer;" onclick="toggleNightModeMenu()">
+          <span>🌙</span>
+          <span>Night Mode: <strong id="nightModeLabel">Manual (HITL)</strong></span>
+          <span style="font-size:10px; margin-left:2px;">▼</span>
+        </button>
+        
+        <!-- Night Mode Dropdown Menu -->
+        <div id="nightModeMenu" class="night-mode-menu hidden" style="position:absolute; top:calc(100% + 4px); right:0; background:var(--surface); border:1px solid var(--border); border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.15); min-width:320px; z-index:1000; overflow:hidden;">
+          <div style="padding:10px 14px; border-bottom:1px solid var(--border); font-size:11px; color:var(--text-soft); font-weight:600; text-transform:uppercase; letter-spacing:0.03em;">
+            Select Policy Mode
+          </div>
+          
+          <div class="night-mode-option" onclick="selectPolicyMode('MANUAL')" style="padding:12px 16px; cursor:pointer; border-bottom:1px solid var(--border); transition:background 0.15s;" onmouseover="this.style.background='#FAFAFB'" onmouseout="this.style.background='transparent'">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+              <span style="font-size:18px;">👤</span>
+              <strong style="font-size:13px; color:var(--text);">Manual (Human-in-the-Loop)</strong>
+              <span id="manualCheckmark" class="policy-checkmark" style="margin-left:auto; color:var(--approve); font-size:14px; display:none;">✓</span>
+            </div>
+            <div style="font-size:11px; color:var(--text-soft); padding-left:28px; line-height:1.4;">
+              All remediation actions require explicit human approval before execution. Maximum safety & oversight.
+            </div>
+          </div>
+
+          <div class="night-mode-option" onclick="selectPolicyMode('TIMED_FALLBACK')" style="padding:12px 16px; cursor:pointer; border-bottom:1px solid var(--border); transition:background 0.15s;" onmouseover="this.style.background='#FAFAFB'" onmouseout="this.style.background='transparent'">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+              <span style="font-size:18px;">⏱️</span>
+              <strong style="font-size:13px; color:var(--text);">Timed Auto-Execute (Dead Man's Switch)</strong>
+              <span id="timedCheckmark" class="policy-checkmark" style="margin-left:auto; color:var(--approve); font-size:14px; display:none;">✓</span>
+            </div>
+            <div style="font-size:11px; color:var(--text-soft); padding-left:28px; line-height:1.4;">
+              Auto-execute after 30s if on-call doesn't respond. Ideal for night shifts with delayed response times.
+            </div>
+          </div>
+
+          <div class="night-mode-option" onclick="selectPolicyMode('AUTONOMOUS')" style="padding:12px 16px; cursor:pointer; border-bottom:1px solid var(--border); transition:background 0.15s;" onmouseover="this.style.background='#FAFAFB'" onmouseout="this.style.background='transparent'">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+              <span style="font-size:18px;">🤖</span>
+              <strong style="font-size:13px; color:var(--text);">Full Autonomous (Instant Auto-Execute)</strong>
+              <span id="autonomousCheckmark" class="policy-checkmark" style="margin-left:auto; color:var(--approve); font-size:14px; display:none;">✓</span>
+            </div>
+            <div style="font-size:11px; color:var(--text-soft); padding-left:28px; line-height:1.4;">
+              Instantly execute high-confidence (≥95%), low-risk actions without approval. Full AI-driven response.
+            </div>
+          </div>
+
+          <div class="night-mode-option" onclick="selectPolicyMode('SUPERVISED')" style="padding:12px 16px; cursor:pointer; transition:background 0.15s;" onmouseover="this.style.background='#FAFAFB'" onmouseout="this.style.background='transparent'">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+              <span style="font-size:18px;">🔍</span>
+              <strong style="font-size:13px; color:var(--text);">Supervised Review Mode</strong>
+              <span id="supervisedCheckmark" class="policy-checkmark" style="margin-left:auto; color:var(--approve); font-size:14px; display:none;">✓</span>
+            </div>
+            <div style="font-size:11px; color:var(--text-soft); padding-left:28px; line-height:1.4;">
+              Agent proposes actions with detailed reasoning for review, but all executions require manual trigger.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-details" style="display:inline-flex; align-items:center; gap:6px; font-size:12px; padding:6px 12px; cursor:pointer;" onclick="openEscalationModal()">
+        <span>📱</span>
+        <span>Alerts</span>
+        <span id="notifBadge" class="sev" style="background:#E2E5EA; font-size:10px; padding:1px 6px;">0</span>
+      </button>
+
+      <div class="status-pill">
+        <span class="pulse"></span>
+        <span class="status-text">Agent Online</span>
+      </div>
+      <button class="btn-investigate" onclick="openNewModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        Investigate Service
+      </button>
+    </div>
+  </header>
+
+  <aside>
+    <div class="sidebar-header">
+      <div class="sidebar-label">Incident queue</div>
+      <span class="sev" id="queueBadge" style="background:#EEF0F2;color:var(--text-soft);">0</span>
+    </div>
+    <div class="search-box">
+      <input type="text" id="incidentSearch" placeholder="Filter incidents..." oninput="filterIncidents()">
+    </div>
+
+    <div id="incidentsList">
+      <!-- Incidents injected dynamically -->
+      <div class="incident-item active">
+        <div class="incident-top">
+          <span class="incident-id">INC-0482</span>
+          <span class="sev sev-1">Sev 1</span>
+        </div>
+        <span class="incident-title">Payment service 500 spike</span>
+        <span class="incident-time">14 min ago</span>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <div id="incidentMain">
+      <div class="incident-header">
+        <div>
+          <h1 id="mainTitle">Payment service 500 spike</h1>
+          <p id="mainSubtitle">INC-0482 · Detected 02:14 UTC · payment-api</p>
+        </div>
+        <div class="confidence-box">
+          <div class="confidence-value" id="mainConfidence">82%</div>
+          <div class="confidence-label">Root cause confidence</div>
+          <div class="confidence-bar"><div class="confidence-fill" id="mainConfidenceFill" style="width:82%;"></div></div>
+        </div>
+      </div>
+
+      <section>
+        <div class="section-title">Evidence trail</div>
+        <div class="trail" id="evidenceTrail">
+          <!-- Evidence items injected dynamically -->
+        </div>
+
+        <!-- Interactive Telemetry Graph Card -->
+        <div class="telemetry-card" id="telemetryCard">
+          <div class="telemetry-header">
+            <div class="telemetry-title">
+              <span>📈</span>
+              <span>Time-Series Telemetry & Anomaly Window</span>
+            </div>
+            <div class="telemetry-legend">
+              <div class="legend-item"><span class="legend-dot" style="background:#E53E3E;"></span><span>5xx Error Rate (%)</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background:#805AD5;"></span><span>P99 Latency (ms)</span></div>
+              <div class="legend-item"><span style="width:10px; height:0; border-top:2px dashed #0E7C86; display:inline-block;"></span><span>Deploy Marker</span></div>
+              <div class="legend-item"><span style="width:12px; height:8px; background:rgba(229,62,62,0.18); border:1px solid rgba(229,62,62,0.4); display:inline-block; border-radius:2px;"></span><span>Anomaly Zone</span></div>
+            </div>
+          </div>
+          <div class="graph-container" id="graphContainer">
+            <div class="graph-tooltip" id="graphTooltip"></div>
+            <svg class="graph-svg" id="telemetrySvg" viewBox="0 0 760 210" preserveAspectRatio="none">
+              <!-- Dynamically drawn via JS -->
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">Recommended action</div>
+        <div class="action-box">
+          <div class="label" id="actionStatusLabel">Proposed fix<span class="risk-tag" id="actionRiskTag">Requires approval</span></div>
+          
+          <div id="countdownBanner" style="display:none; background:#FBF1DF; border:1px solid #E2D1B3; border-radius:6px; padding:10px 14px; margin-bottom:12px; align-items:center; justify-content:space-between;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:18px;">⏱️</span>
+              <div>
+                <strong style="font-size:12px; color:#B7791F; display:block;">Dead Man's Switch Active (Night Policy)</strong>
+                <span id="countdownText" style="font-size:12px; color:var(--text-soft);">Auto-mitigating in <strong id="countdownSeconds" class="mono" style="color:var(--text); font-size:13px;">30</strong>s if on-call doesn't respond...</span>
+              </div>
+            </div>
+            <button class="btn-details" style="font-size:11px; padding:4px 10px; background:#fff; border-color:#E2D1B3;" onclick="pauseCountdown()">Pause Countdown</button>
+          </div>
+
+          <div class="command mono" id="actionCommand">Roll back deploy #482 on payment-api</div>
+          <div class="btn-row" id="actionBtnRow">
+            <button class="btn-approve" id="btnApprove" onclick="submitActionDecision(true)">Approve rollback</button>
+            <button class="btn-reject" id="btnReject" onclick="submitActionDecision(false)">Reject</button>
+            <button class="btn-details" onclick="openDetailsModal()">View full diagnosis</button>
+          </div>
+        </div>
+
+        <!-- Live Post-Fix Recovery & Health Probe Stream Console -->
+        <div class="sre-console" id="sreConsole" style="display:none;">
+          <div class="console-topbar">
+            <div class="console-controls">
+              <span class="console-dot" style="background:#EF4444;"></span>
+              <span class="console-dot" style="background:#F59E0B;"></span>
+              <span class="console-dot" style="background:#10B981;"></span>
+              <span class="console-title" style="margin-left:8px;" id="consoleHostTitle">sre-rollout-worker • cluster-prod-us-east-1</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span id="consoleStatusBadge" class="badge-health" style="background:rgba(16,185,129,0.15); color:#10B981; font-size:10px; font-family:'IBM Plex Mono',monospace;">STREAMING PROBES...</span>
+            </div>
+          </div>
+          <div class="console-body" id="consoleBody">
+            <!-- Streamed output inserted line-by-line -->
+          </div>
+          <div class="console-footer" id="consoleFooter">
+            <span id="consoleFooterSummary">Initiating rollout verification...</span>
+            <div style="display:flex; gap:12px;">
+              <span id="consoleProbesPassed" style="color:#10B981; font-weight:600;">Probes: 0/3</span>
+              <span id="consoleErrorDelta" style="color:#94A3B8;">Error Rate: --</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="audit" id="auditList">
+        <div class="audit-item"><span>Agent flagged incident and generated diagnosis</span><span id="auditDetectTime">02:15 UTC</span></div>
+        <div class="audit-item"><span id="auditStatusLabel">Awaiting human review</span><span id="auditNowTime">Now</span></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal: Trigger Investigation -->
+<div id="newInvestigateModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Investigate Service</h3>
+      <button class="btn-close" onclick="closeNewModal()">&times;</button>
+    </div>
+    <div class="form-group">
+      <label for="modalServiceSelect">Target Service</label>
+      <select id="modalServiceSelect" class="form-control">
+        <optgroup label="🌐 Famous Real-World SRE Outages">
+          <option value="crowdstrike-sensor">🚨 CrowdStrike Falcon Sensor (Channel File 291 Kernel Panic / Bootloop)</option>
+          <option value="cloudflare-edge">🔥 Cloudflare Global Outage (WAF Catastrophic Regex 100% CPU Backtrack)</option>
+          <option value="dynamodb-metadata">⚡ AWS US-East-1 DynamoDB (Network Partition & Metadata Lease Saturation)</option>
+        </optgroup>
+        <optgroup label="🛍️ Production Code Regressions">
+          <option value="checkout-service">🛒 E-Commerce Checkout (v2.4.0 NullPointerException Outage)</option>
+          <option value="web-store">🌐 Web Store (v1.2.0 Shopping Cart 'Buy Now' Broken)</option>
+          <option value="auth-service">🔑 Auth Service (v1.8.3 JWT Signature Verification Key Mismatch)</option>
+          <option value="inventory-service">📦 Inventory Service (v3.1.0 Missing DB Column Schema Regression)</option>
+          <option value="notification-service">✉️ Notification Service (v1.2.5 Email Template TypeError Panic)</option>
+        </optgroup>
+        <optgroup label="📉 Resource Exhaustion & Starvation">
+          <option value="analytics-service">📈 Analytics Service (JVM Heap 98.5% OutOfMemoryError)</option>
+          <option value="order-service">🗄️ Order Service (HikariCP Database Connection Pool Exhaustion)</option>
+          <option value="search-service">🔍 Search Service (Worker CPU & ThreadPoolExecutor Starvation)</option>
+        </optgroup>
+        <optgroup label="🪤 Red Herrings & Upstream Outages">
+          <option value="payment-gateway">💳 Payment Gateway (Upstream Stripe 503 Global Vendor Outage)</option>
+          <option value="user-service">🔒 User Service (Expired mTLS Cluster Certificate)</option>
+          <option value="billing-service">💸 Billing Service (Database Concurrency Deadlock Collision)</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-details" onclick="closeNewModal()">Cancel</button>
+      <button class="btn-approve" onclick="triggerInvestigation()">Run Diagnosis</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Full Diagnosis Details -->
+<div id="detailsModal" class="modal-overlay hidden">
+  <div class="modal-box" style="width:640px;">
+    <div class="modal-header">
+      <h3>Full Diagnostic Report</h3>
+      <button class="btn-close" onclick="closeDetailsModal()">&times;</button>
+    </div>
+    <div id="fullDetailsBody" style="font-size:13px; max-height:400px; overflow-y:auto; line-height:1.5;">
+      <!-- Diagnostic dump injected -->
+    </div>
+    <div class="modal-footer">
+      <button class="btn-details" onclick="closeDetailsModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Escalation Alerts / Mobile Push Simulation -->
+<div id="escalationModal" class="modal-overlay hidden">
+  <div class="modal-box" style="width:620px;">
+    <div class="modal-header">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:20px;">📱</span>
+        <div>
+          <h3 style="margin:0; font-size:16px;">On-Call Escalations & Mobile Alerts</h3>
+          <p style="margin:2px 0 0; font-size:12px; color:var(--text-soft);">Simulated PagerDuty push notifications and Slack channel broadcasts</p>
+        </div>
+      </div>
+      <button class="btn-close" onclick="closeEscalationModal()">&times;</button>
+    </div>
+    <div id="escalationList" style="max-height:420px; overflow-y:auto; display:flex; flex-direction:column; gap:12px; padding:4px 0;">
+      <!-- Escalation cards dynamically inserted -->
+    </div>
+    <div class="modal-footer">
+      <button class="btn-details" onclick="closeEscalationModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="/static/app.js?v=3"></script>
+</body>
+</html>

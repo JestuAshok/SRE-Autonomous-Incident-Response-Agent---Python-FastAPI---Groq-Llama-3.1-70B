@@ -1,0 +1,37 @@
+2026-09-01T10:00:01.120Z [INFO] [checkout-service] [http-nio-8080-exec-1] c.e.c.s.CheckoutProcessor - Order ORD-98101 processed successfully in 112ms. Total: $49.99
+2026-09-01T10:02:14.331Z [INFO] [checkout-service] [http-nio-8080-exec-2] c.e.c.s.CheckoutProcessor - Order ORD-98102 processed successfully in 98ms. Total: $120.50
+2026-09-01T10:05:40.890Z [INFO] [checkout-service] [http-nio-8080-exec-3] c.e.c.s.CheckoutProcessor - Order ORD-98103 processed successfully in 105ms. Total: $15.00
+2026-09-01T10:08:19.412Z [INFO] [checkout-service] [http-nio-8080-exec-1] c.e.c.s.CheckoutProcessor - Order ORD-98104 processed successfully in 118ms. Total: $350.20
+2026-09-01T10:10:02.775Z [INFO] [checkout-service] [http-nio-8080-exec-4] c.e.c.s.CheckoutProcessor - Order ORD-98105 processed successfully in 94ms. Total: $82.40
+2026-09-01T10:12:33.201Z [INFO] [checkout-service] [http-nio-8080-exec-2] c.e.c.s.CheckoutProcessor - Order ORD-98106 processed successfully in 108ms. Total: $29.95
+2026-09-01T10:13:58.914Z [INFO] [checkout-service] [http-nio-8080-exec-5] c.e.c.s.CheckoutProcessor - Order ORD-98107 processed successfully in 101ms. Total: $64.10
+2026-09-01T10:14:00.000Z [INFO] [checkout-service] [system-lifecycle] c.e.c.config.LifecycleManager - Starting graceful shutdown for rolling deployment v2.4.0 (commit: a9f4c3b)
+2026-09-01T10:14:15.250Z [INFO] [checkout-service] [system-lifecycle] c.e.c.config.LifecycleManager - Initialized checkout-service v2.4.0 on port 8080. Ready for incoming traffic.
+2026-09-01T10:14:45.312Z [INFO] [checkout-service] [http-nio-8080-exec-1] c.e.c.s.CheckoutProcessor - Order ORD-98120 processed successfully in 110ms. Total: $45.00
+2026-09-01T10:15:22.104Z [ERROR] [checkout-service] [http-nio-8080-exec-4] c.e.c.v.PaymentMethodValidator - Unhandled exception during payment validation for order ORD-98124
+java.lang.NullPointerException: Cannot invoke "com.ecommerce.checkout.model.PaymentMethod.getToken()" because "method" is null
+	at com.ecommerce.checkout.validator.PaymentMethodValidator.validate(PaymentMethodValidator.java:142)
+	at com.ecommerce.checkout.service.CheckoutProcessor.processOrder(CheckoutProcessor.java:88)
+	at com.ecommerce.checkout.controller.CheckoutController.checkout(CheckoutController.java:54)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+2026-09-01T10:15:22.115Z [ERROR] [checkout-service] [http-nio-8080-exec-4] c.e.c.c.CheckoutController - POST /api/v1/checkout failed with HTTP 500: Internal Server Error [traceId=tr-8891024]
+2026-09-01T10:15:25.430Z [ERROR] [checkout-service] [http-nio-8080-exec-2] c.e.c.v.PaymentMethodValidator - Unhandled exception during payment validation for order ORD-98125
+java.lang.NullPointerException: Cannot invoke "com.ecommerce.checkout.model.PaymentMethod.getToken()" because "method" is null
+	at com.ecommerce.checkout.validator.PaymentMethodValidator.validate(PaymentMethodValidator.java:142)
+	at com.ecommerce.checkout.service.CheckoutProcessor.processOrder(CheckoutProcessor.java:88)
+	at com.ecommerce.checkout.controller.CheckoutController.checkout(CheckoutController.java:54)
+2026-09-01T10:15:25.438Z [ERROR] [checkout-service] [http-nio-8080-exec-2] c.e.c.c.CheckoutController - POST /api/v1/checkout failed with HTTP 500: Internal Server Error [traceId=tr-8891025]
+2026-09-01T10:16:01.819Z [ERROR] [checkout-service] [http-nio-8080-exec-6] c.e.c.v.PaymentMethodValidator - Unhandled exception during payment validation for order ORD-98128
+java.lang.NullPointerException: Cannot invoke "com.ecommerce.checkout.model.PaymentMethod.getToken()" because "method" is null
+	at com.ecommerce.checkout.validator.PaymentMethodValidator.validate(PaymentMethodValidator.java:142)
+	at com.ecommerce.checkout.service.CheckoutProcessor.processOrder(CheckoutProcessor.java:88)
+	at com.ecommerce.checkout.controller.CheckoutController.checkout(CheckoutController.java:54)
+2026-09-01T10:16:01.825Z [ERROR] [checkout-service] [http-nio-8080-exec-6] c.e.c.c.CheckoutController - POST /api/v1/checkout failed with HTTP 500: Internal Server Error [traceId=tr-8891028]
+2026-09-01T10:17:14.502Z [ERROR] [checkout-service] [http-nio-8080-exec-1] c.e.c.v.PaymentMethodValidator - Unhandled exception during payment validation for order ORD-98135
+java.lang.NullPointerException: Cannot invoke "com.ecommerce.checkout.model.PaymentMethod.getToken()" because "method" is null
+	at com.ecommerce.checkout.validator.PaymentMethodValidator.validate(PaymentMethodValidator.java:142)
+	at com.ecommerce.checkout.service.CheckoutProcessor.processOrder(CheckoutProcessor.java:88)
+	at com.ecommerce.checkout.controller.CheckoutController.checkout(CheckoutController.java:54)
+2026-09-01T10:17:14.510Z [ERROR] [checkout-service] [http-nio-8080-exec-1] c.e.c.c.CheckoutController - POST /api/v1/checkout failed with HTTP 500: Internal Server Error [traceId=tr-8891035]
+2026-09-01T10:18:30.220Z [WARN] [checkout-service] [circuit-breaker-pool] c.e.c.c.CircuitBreaker - Checkout error rate exceeded 40% threshold over 2 min rolling window. Current state: OPEN

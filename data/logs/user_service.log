@@ -1,0 +1,9 @@
+2026-09-01T10:35:00.000Z [INFO] [user-service] [main] c.e.u.UserApplication - Deployment completed for version v2.0.1. README and documentation cleanups.
+2026-09-01T11:00:02.100Z [ERROR] [user-service] [ingress-worker] c.e.u.SecurityContext - Inbound client mTLS handshake failed: certificate expired
+javax.net.ssl.SSLHandshakeException: PKIX path validation failed: certificate expired
+	at com.ecommerce.user.security.SecurityContext.initiateHandshake(SecurityContext.java:112)
+	at com.ecommerce.user.ingress.TlsFilter.doFilter(TlsFilter.java:55)
+2026-09-01T11:00:15.420Z [ERROR] [user-service] [ingress-worker] c.e.u.SecurityContext - Inbound client mTLS handshake failed: certificate expired
+javax.net.ssl.SSLHandshakeException: PKIX path validation failed: certificate expired
+	at com.ecommerce.user.security.SecurityContext.initiateHandshake(SecurityContext.java:112)
+	at com.ecommerce.user.ingress.TlsFilter.doFilter(TlsFilter.java:55)

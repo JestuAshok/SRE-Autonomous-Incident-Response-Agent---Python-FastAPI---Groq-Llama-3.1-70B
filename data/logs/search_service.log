@@ -1,0 +1,10 @@
+2026-09-01T10:00:00.000Z [INFO] [search-service] [main] c.e.s.SearchServer - Elasticsearch search proxy worker cluster ready.
+2026-09-01T10:14:00.000Z [WARN] [search-service] [cpu-monitor] c.e.s.SystemMetrics - CPU utilization reached 99.4% across 8 worker cores.
+2026-09-01T10:15:10.912Z [ERROR] [search-service] [search-dispatcher] c.e.s.SearchWorker - Query worker thread pool queue exhausted
+concurrent.futures._base.RejectedExecutionException: Task rejected from ThreadPoolExecutor [Running, pool size = 16, active threads = 16, queued tasks = 1000]
+	at search_worker.py:140 in execute_regex_search
+	at query_router.py:82 in handle_search_request
+2026-09-01T10:15:30.400Z [ERROR] [search-service] [search-dispatcher] c.e.s.SearchWorker - Query worker thread pool queue exhausted
+concurrent.futures._base.RejectedExecutionException: Task rejected from ThreadPoolExecutor [Running, pool size = 16, active threads = 16, queued tasks = 1000]
+	at search_worker.py:140 in execute_regex_search
+	at query_router.py:82 in handle_search_request

@@ -1,0 +1,176 @@
+[
+  {
+    "id": "scenario_01_checkout_npe_regression",
+    "name": "Checkout Service NullPointerException Post-Deploy Regression",
+    "service": "checkout-service",
+    "category": "deploy_regression",
+    "description": "Deployment v2.4.0 introduced unhandled NullPointerException in PaymentMethodValidator.java:142 when parsing digital wallet payloads.",
+    "expected": {
+      "cause_category": "deploy_regression",
+      "is_deploy_cause": true,
+      "culprit_commit": "a9f4c3b",
+      "culprit_version": "v2.4.0",
+      "exception_substring": "NullPointerException",
+      "faulty_file_and_line": "PaymentMethodValidator.java:142",
+      "action_type": "ROLLBACK_DEPLOYMENT",
+      "target_rollback_version": "v2.3.9",
+      "min_confidence": 0.85
+    }
+  },
+  {
+    "id": "scenario_02_auth_jwt_key_mismatch",
+    "name": "Auth Service JWT Signature Verification Key Mismatch",
+    "service": "auth-service",
+    "category": "deploy_regression",
+    "description": "Deployment v1.8.3 modified token signing algorithm in JwtTokenProvider.py:88, throwing SignatureVerificationError on all active user tokens.",
+    "expected": {
+      "cause_category": "deploy_regression",
+      "is_deploy_cause": true,
+      "culprit_commit": "b4f81c2",
+      "culprit_version": "v1.8.3",
+      "exception_substring": "SignatureVerificationError",
+      "faulty_file_and_line": "JwtTokenProvider.py:88",
+      "action_type": "ROLLBACK_DEPLOYMENT",
+      "target_rollback_version": "v1.8.2",
+      "min_confidence": 0.85
+    }
+  },
+  {
+    "id": "scenario_03_inventory_missing_column_migration",
+    "name": "Inventory Service DB Schema Column Missing Regression",
+    "service": "inventory-service",
+    "category": "deploy_regression",
+    "description": "Deployment v3.1.0 updated SQL query to select warehouse_zone before migration applied, causing DatabaseSyntaxError in InventoryRepository.go:64.",
+    "expected": {
+      "cause_category": "deploy_regression",
+      "is_deploy_cause": true,
+      "culprit_commit": "f8a201c",
+      "culprit_version": "v3.1.0",
+      "exception_substring": "warehouse_zone",
+      "faulty_file_and_line": "InventoryRepository.go:64",
+      "action_type": "ROLLBACK_DEPLOYMENT",
+      "target_rollback_version": "v3.0.9",
+      "min_confidence": 0.85
+    }
+  },
+  {
+    "id": "scenario_04_notification_template_typeerror",
+    "name": "Notification Service Template Parsing TypeError Panic",
+    "service": "notification-service",
+    "category": "deploy_regression",
+    "description": "Deployment v1.2.5 omitted null check on user metadata in TemplateEngine.ts:105, throwing TypeError on email template dispatch.",
+    "expected": {
+      "cause_category": "deploy_regression",
+      "is_deploy_cause": true,
+      "culprit_commit": "d1c94e7",
+      "culprit_version": "v1.2.5",
+      "exception_substring": "TypeError",
+      "faulty_file_and_line": "TemplateEngine.ts:105",
+      "action_type": "ROLLBACK_DEPLOYMENT",
+      "target_rollback_version": "v1.2.4",
+      "min_confidence": 0.85
+    }
+  },
+  {
+    "id": "scenario_05_analytics_jvm_heap_oom",
+    "name": "Analytics Service JVM Heap Space OutOfMemoryError",
+    "service": "analytics-service",
+    "category": "resource_exhaustion",
+    "description": "Unbounded batch accumulation under high event volume exhausted JVM heap (98.5% memory), throwing java.lang.OutOfMemoryError. Last deploy was 4 days ago.",
+    "expected": {
+      "cause_category": "resource_exhaustion",
+      "is_deploy_cause": false,
+      "culprit_commit": null,
+      "culprit_version": null,
+      "exception_substring": "OutOfMemoryError",
+      "faulty_file_and_line": "BatchAggregator.java:210",
+      "action_type": "SCALE_UP",
+      "min_confidence": 0.85
+    }
+  },
+  {
+    "id": "scenario_06_order_db_connection_pool_exhaustion",
+    "name": "Order Service HikariCP Database Connection Pool Exhaustion",
+    "service": "order-service",
+    "category": "resource_exhaustion",
+    "description": "Flash sale flash-traffic saturated all 50 database pool connections, throwing HikariPool ConnectionTimeoutException. No deploy in 48 hours.",
+    "expected": {
+      "cause_category": "resource_exhaustion",
+      "is_deploy_cause": false,
+      "culprit_commit": null,
+      "culprit_version": null,
+      "exception_substring": "HikariPool",
+      "faulty_file_and_line": "OrderDAO.java:53",
+      "action_type": "SCALE_UP",
+      "min_confidence": 0.85
+    }
+  },
+  {
+    "id": "scenario_07_search_cpu_thread_starvation",
+    "name": "Search Service CPU Saturation and ThreadPoolExecutor Starvation",
+    "service": "search-service",
+    "category": "resource_exhaustion",
+    "description": "Unindexed complex regex queries spiked CPU to 99.4%, saturating worker threads and causing RejectedExecutionException. No deploy in 72 hours.",
+    "expected": {
+      "cause_category": "resource_exhaustion",
+      "is_deploy_cause": false,
+      "culprit_commit": null,
+      "culprit_version": null,
+      "exception_substring": "RejectedExecutionException",
+      "faulty_file_and_line": "SearchWorker.py:140",
+      "action_type": "THROTTLE_TRAFFIC",
+      "min_confidence": 0.85
+    }
+  },
+  {
+    "id": "scenario_08_payment_stripe_upstream_outage_red_herring",
+    "name": "Payment Gateway 3rd-Party Stripe Global Outage Red Herring",
+    "service": "payment-gateway",
+    "category": "red_herring",
+    "description": "Benign deploy v1.5.2 (logging & comments) occurred 15 min ago. Stripe API went down globally with 503 Service Unavailable. Deploy is NOT the cause.",
+    "expected": {
+      "cause_category": "red_herring",
+      "is_deploy_cause": false,
+      "culprit_commit": null,
+      "culprit_version": null,
+      "exception_substring": "503 Service Unavailable",
+      "faulty_file_and_line": "StripeClient.java:94",
+      "action_type": "MANUAL_INVESTIGATION",
+      "min_confidence": 0.85
+    }
+  },
+  {
+    "id": "scenario_09_user_service_expired_tls_cert_red_herring",
+    "name": "User Service Expired TLS/SSL Certificate Red Herring",
+    "service": "user-service",
+    "category": "red_herring",
+    "description": "Benign deploy v2.0.1 (README cleanup) deployed 25 min ago. Cluster mTLS certificate expired at 11:00 UTC, causing SSLHandshakeException. Deploy is NOT the cause.",
+    "expected": {
+      "cause_category": "red_herring",
+      "is_deploy_cause": false,
+      "culprit_commit": null,
+      "culprit_version": null,
+      "exception_substring": "SSLHandshakeException",
+      "faulty_file_and_line": "SecurityContext.java:112",
+      "action_type": "MANUAL_INVESTIGATION",
+      "min_confidence": 0.85
+    }
+  },
+  {
+    "id": "scenario_10_billing_db_deadlock_red_herring",
+    "name": "Billing Service Database Concurrency Deadlock Red Herring",
+    "service": "billing-service",
+    "category": "red_herring",
+    "description": "Benign deploy v1.4.0 (lint config) occurred 30 min ago. Concurrent payout batch job collided with subscription renewals causing MySQLTransactionRollbackException Deadlock. Deploy is NOT the cause.",
+    "expected": {
+      "cause_category": "red_herring",
+      "is_deploy_cause": false,
+      "culprit_commit": null,
+      "culprit_version": null,
+      "exception_substring": "Deadlock found",
+      "faulty_file_and_line": "BillingLedger.java:188",
+      "action_type": "MANUAL_INVESTIGATION",
+      "min_confidence": 0.85
+    }
+  }
+]

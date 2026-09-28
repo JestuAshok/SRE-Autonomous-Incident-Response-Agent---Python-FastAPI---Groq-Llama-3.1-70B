@@ -1,0 +1,13 @@
+2026-09-01T10:14:00.000Z [INFO] [notification-service] [main] c.e.n.NotificationServer - Deployment completed for version v1.2.5. Email template engine updated.
+2026-09-01T10:15:12.890Z [ERROR] [notification-service] [email-worker-1] c.e.n.TemplateEngine - Uncaught TypeError while rendering order confirmation email
+TypeError: Cannot read properties of undefined (reading 'recipient_email')
+	at TemplateEngine.render(TemplateEngine.ts:105)
+	at NotificationDispatcher.sendEmail(NotificationDispatcher.ts:44)
+2026-09-01T10:15:35.412Z [ERROR] [notification-service] [email-worker-2] c.e.n.TemplateEngine - Uncaught TypeError while rendering order confirmation email
+TypeError: Cannot read properties of undefined (reading 'recipient_email')
+	at TemplateEngine.render(TemplateEngine.ts:105)
+	at NotificationDispatcher.sendEmail(NotificationDispatcher.ts:44)
+2026-09-01T10:16:00.120Z [ERROR] [notification-service] [email-worker-1] c.e.n.TemplateEngine - Panic in template rendering chain
+TypeError: Cannot read properties of undefined (reading 'recipient_email')
+	at TemplateEngine.render(TemplateEngine.ts:105)
+	at NotificationDispatcher.sendEmail(NotificationDispatcher.ts:44)

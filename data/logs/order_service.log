@@ -1,0 +1,10 @@
+2026-09-01T10:00:00.000Z [INFO] [order-service] [main] c.e.o.OrderApplication - Order service initialized with pool size 50 connections.
+2026-09-01T10:14:00.000Z [WARN] [order-service] [pool-monitor] c.e.o.HikariPool - Database connection pool utilization at 98%: active=49, idle=1
+2026-09-01T10:15:05.145Z [ERROR] [order-service] [http-worker-12] c.e.o.OrderDAO - Database operation failed: connection pool timeout
+java.sql.SQLTransientConnectionException: HikariPool - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:217)
+	at com.ecommerce.order.dao.OrderDAO.createOrder(OrderDAO.java:53)
+2026-09-01T10:15:35.880Z [ERROR] [order-service] [http-worker-19] c.e.o.OrderDAO - Database operation failed: connection pool timeout
+java.sql.SQLTransientConnectionException: HikariPool - Connection is not available, request timed out after 30000ms.
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:217)
+	at com.ecommerce.order.dao.OrderDAO.createOrder(OrderDAO.java:53)

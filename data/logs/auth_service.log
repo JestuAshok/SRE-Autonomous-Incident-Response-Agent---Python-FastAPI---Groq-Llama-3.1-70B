@@ -1,0 +1,10 @@
+2026-09-01T09:40:00.000Z [INFO] [auth-service] [main] c.e.a.AuthApplication - Auth service v1.8.2 running with 4 worker threads
+2026-09-01T09:45:12.110Z [INFO] [auth-service] [auth-exec-1] c.e.a.s.JwtValidator - Token verified for user_id=98124 (scope: checkout)
+2026-09-01T09:50:33.421Z [INFO] [auth-service] [auth-exec-2] c.e.a.s.JwtValidator - Token verified for user_id=98125 (scope: checkout)
+2026-09-01T09:55:18.990Z [WARN] [auth-service] [auth-exec-3] c.e.a.s.JwtValidator - Expired refresh token presented for user_id=44120. Issuing re-auth challenge.
+2026-09-01T10:00:00.000Z [INFO] [auth-service] [auth-exec-1] c.e.a.s.JwtValidator - Token verified for user_id=98101 (scope: checkout)
+2026-09-01T10:05:00.150Z [INFO] [auth-service] [auth-exec-4] c.e.a.s.JwtValidator - Token verified for user_id=98103 (scope: checkout)
+2026-09-01T10:10:00.220Z [INFO] [auth-service] [auth-exec-2] c.e.a.s.JwtValidator - Token verified for user_id=98105 (scope: checkout)
+2026-09-01T10:15:00.310Z [INFO] [auth-service] [auth-exec-3] c.e.a.s.JwtValidator - Token verified for user_id=98124 (scope: checkout)
+2026-09-01T10:16:00.500Z [INFO] [auth-service] [auth-exec-1] c.e.a.s.JwtValidator - Token verified for user_id=98128 (scope: checkout)
+2026-09-01T10:18:00.000Z [INFO] [auth-service] [auth-exec-4] c.e.a.s.JwtValidator - Token verified for user_id=98135 (scope: checkout)

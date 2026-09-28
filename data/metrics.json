@@ -1,0 +1,365 @@
+{
+  "checkout-service": {
+    "cpu_utilization_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 24.5},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 26.1},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 25.3},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 28.0},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 65.4},
+      {"timestamp": "2026-09-01T10:16:00Z", "value": 89.2},
+      {"timestamp": "2026-09-01T10:17:00Z", "value": 94.7},
+      {"timestamp": "2026-09-01T10:18:00Z", "value": 92.1}
+    ],
+    "memory_utilization_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 52.0},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 53.2},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 52.8},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 54.0},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 68.3},
+      {"timestamp": "2026-09-01T10:16:00Z", "value": 81.5},
+      {"timestamp": "2026-09-01T10:17:00Z", "value": 84.9},
+      {"timestamp": "2026-09-01T10:18:00Z", "value": 83.7}
+    ],
+    "error_rate_5xx_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 14.8},
+      {"timestamp": "2026-09-01T10:16:00Z", "value": 48.7},
+      {"timestamp": "2026-09-01T10:17:00Z", "value": 52.3},
+      {"timestamp": "2026-09-01T10:18:00Z", "value": 50.1}
+    ],
+    "p99_latency_ms": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 110},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 115},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 108},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 120},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 850},
+      {"timestamp": "2026-09-01T10:16:00Z", "value": 4200},
+      {"timestamp": "2026-09-01T10:17:00Z", "value": 4350},
+      {"timestamp": "2026-09-01T10:18:00Z", "value": 4180}
+    ],
+    "requests_per_sec": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 340},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 355},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 362},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 370},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 345},
+      {"timestamp": "2026-09-01T10:16:00Z", "value": 310},
+      {"timestamp": "2026-09-01T10:17:00Z", "value": 290},
+      {"timestamp": "2026-09-01T10:18:00Z", "value": 275}
+    ]
+  },
+  "crowdstrike-sensor": {
+    "cpu_utilization_pct": [
+      {"timestamp": "2026-09-01T04:00:00Z", "value": 8.0},
+      {"timestamp": "2026-09-01T04:05:00Z", "value": 8.5},
+      {"timestamp": "2026-09-01T04:08:00Z", "value": 9.0},
+      {"timestamp": "2026-09-01T04:09:00Z", "value": 12.0},
+      {"timestamp": "2026-09-01T04:10:00Z", "value": 84.5},
+      {"timestamp": "2026-09-01T04:11:00Z", "value": 91.2}
+    ],
+    "memory_utilization_pct": [
+      {"timestamp": "2026-09-01T04:00:00Z", "value": 15.0},
+      {"timestamp": "2026-09-01T04:05:00Z", "value": 15.2},
+      {"timestamp": "2026-09-01T04:08:00Z", "value": 15.1},
+      {"timestamp": "2026-09-01T04:09:00Z", "value": 16.0},
+      {"timestamp": "2026-09-01T04:10:00Z", "value": 72.0},
+      {"timestamp": "2026-09-01T04:11:00Z", "value": 85.0}
+    ],
+    "error_rate_5xx_pct": [
+      {"timestamp": "2026-09-01T04:00:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T04:05:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T04:08:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T04:09:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T04:10:00Z", "value": 88.5},
+      {"timestamp": "2026-09-01T04:11:00Z", "value": 94.2}
+    ],
+    "p99_latency_ms": [
+      {"timestamp": "2026-09-01T04:00:00Z", "value": 15},
+      {"timestamp": "2026-09-01T04:05:00Z", "value": 16},
+      {"timestamp": "2026-09-01T04:08:00Z", "value": 15},
+      {"timestamp": "2026-09-01T04:09:00Z", "value": 18},
+      {"timestamp": "2026-09-01T04:10:00Z", "value": 4800},
+      {"timestamp": "2026-09-01T04:11:00Z", "value": 5400}
+    ]
+  },
+  "cloudflare-edge": {
+    "cpu_utilization_pct": [
+      {"timestamp": "2026-09-01T11:50:00Z", "value": 22.0},
+      {"timestamp": "2026-09-01T11:55:00Z", "value": 23.5},
+      {"timestamp": "2026-09-01T11:58:00Z", "value": 22.8},
+      {"timestamp": "2026-09-01T12:00:00Z", "value": 25.0},
+      {"timestamp": "2026-09-01T12:01:00Z", "value": 96.5},
+      {"timestamp": "2026-09-01T12:02:00Z", "value": 99.8}
+    ],
+    "memory_utilization_pct": [
+      {"timestamp": "2026-09-01T11:50:00Z", "value": 40.0},
+      {"timestamp": "2026-09-01T11:55:00Z", "value": 41.0},
+      {"timestamp": "2026-09-01T11:58:00Z", "value": 40.5},
+      {"timestamp": "2026-09-01T12:00:00Z", "value": 42.0},
+      {"timestamp": "2026-09-01T12:01:00Z", "value": 68.0},
+      {"timestamp": "2026-09-01T12:02:00Z", "value": 75.0}
+    ],
+    "error_rate_5xx_pct": [
+      {"timestamp": "2026-09-01T11:50:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T11:55:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T11:58:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T12:00:00Z", "value": 0.05},
+      {"timestamp": "2026-09-01T12:01:00Z", "value": 62.4},
+      {"timestamp": "2026-09-01T12:02:00Z", "value": 88.5}
+    ],
+    "p99_latency_ms": [
+      {"timestamp": "2026-09-01T11:50:00Z", "value": 18},
+      {"timestamp": "2026-09-01T11:55:00Z", "value": 19},
+      {"timestamp": "2026-09-01T11:58:00Z", "value": 18},
+      {"timestamp": "2026-09-01T12:00:00Z", "value": 22},
+      {"timestamp": "2026-09-01T12:01:00Z", "value": 8400},
+      {"timestamp": "2026-09-01T12:02:00Z", "value": 12500}
+    ]
+  },
+  "dynamodb-metadata": {
+    "cpu_utilization_pct": [
+      {"timestamp": "2026-09-01T08:00:00Z", "value": 30.0},
+      {"timestamp": "2026-09-01T08:05:00Z", "value": 31.5},
+      {"timestamp": "2026-09-01T08:10:00Z", "value": 32.0},
+      {"timestamp": "2026-09-01T08:12:00Z", "value": 35.0},
+      {"timestamp": "2026-09-01T08:14:00Z", "value": 88.0},
+      {"timestamp": "2026-09-01T08:15:00Z", "value": 92.5}
+    ],
+    "memory_utilization_pct": [
+      {"timestamp": "2026-09-01T08:00:00Z", "value": 45.0},
+      {"timestamp": "2026-09-01T08:05:00Z", "value": 45.5},
+      {"timestamp": "2026-09-01T08:10:00Z", "value": 46.0},
+      {"timestamp": "2026-09-01T08:12:00Z", "value": 47.0},
+      {"timestamp": "2026-09-01T08:14:00Z", "value": 78.0},
+      {"timestamp": "2026-09-01T08:15:00Z", "value": 84.0}
+    ],
+    "error_rate_5xx_pct": [
+      {"timestamp": "2026-09-01T08:00:00Z", "value": 0.00},
+      {"timestamp": "2026-09-01T08:05:00Z", "value": 0.00},
+      {"timestamp": "2026-09-01T08:10:00Z", "value": 0.00},
+      {"timestamp": "2026-09-01T08:12:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T08:14:00Z", "value": 34.0},
+      {"timestamp": "2026-09-01T08:15:00Z", "value": 41.5}
+    ],
+    "p99_latency_ms": [
+      {"timestamp": "2026-09-01T08:00:00Z", "value": 12},
+      {"timestamp": "2026-09-01T08:05:00Z", "value": 13},
+      {"timestamp": "2026-09-01T08:10:00Z", "value": 12},
+      {"timestamp": "2026-09-01T08:12:00Z", "value": 18},
+      {"timestamp": "2026-09-01T08:14:00Z", "value": 6800},
+      {"timestamp": "2026-09-01T08:15:00Z", "value": 8200}
+    ]
+  },
+  "payment-gateway": {
+    "cpu_utilization_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 18.2},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 19.0},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 22.4},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 21.1},
+      {"timestamp": "2026-09-01T10:30:00Z", "value": 25.0}
+    ],
+    "memory_utilization_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 45.0},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 45.8},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 46.2},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 45.9},
+      {"timestamp": "2026-09-01T10:30:00Z", "value": 48.0}
+    ],
+    "error_rate_5xx_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 0.00},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 0.05},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 0.04},
+      {"timestamp": "2026-09-01T10:30:00Z", "value": 34.5}
+    ],
+    "p99_latency_ms": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 160},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 175},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 210},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 190},
+      {"timestamp": "2026-09-01T10:30:00Z", "value": 2100}
+    ],
+    "requests_per_sec": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 210},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 225},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 215},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 180},
+      {"timestamp": "2026-09-01T10:30:00Z", "value": 150}
+    ]
+  },
+  "auth-service": {
+    "cpu_utilization_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 12.0},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 12.5},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 13.1},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 12.8},
+      {"timestamp": "2026-09-01T10:18:00Z", "value": 12.2}
+    ],
+    "memory_utilization_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 38.0},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 38.4},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 38.9},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 38.5},
+      {"timestamp": "2026-09-01T10:18:00Z", "value": 38.1}
+    ],
+    "error_rate_5xx_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 0.00},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 0.00},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 0.00},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 0.00},
+      {"timestamp": "2026-09-01T10:18:00Z", "value": 0.00}
+    ],
+    "p99_latency_ms": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 25},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 28},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 24},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 26},
+      {"timestamp": "2026-09-01T10:18:00Z", "value": 27}
+    ],
+    "requests_per_sec": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 520},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 530},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 540},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 535},
+      {"timestamp": "2026-09-01T10:18:00Z", "value": 525}
+    ]
+  },
+  "inventory-service": {
+    "error_rate_5xx_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 38.2}
+    ],
+    "p99_latency_ms": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 45},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 48},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 46},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 50},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 1200}
+    ]
+  },
+  "notification-service": {
+    "error_rate_5xx_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 0.03},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 42.1}
+    ],
+    "p99_latency_ms": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 90},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 92},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 89},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 95},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 1850}
+    ]
+  },
+  "analytics-service": {
+    "memory_utilization_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 60.0},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 68.0},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 75.0},
+      {"timestamp": "2026-09-01T10:12:00Z", "value": 88.0},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 98.5}
+    ],
+    "error_rate_5xx_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 0.00},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 0.00},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T10:12:00Z", "value": 0.05},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 29.4}
+    ]
+  },
+  "order-service": {
+    "p99_latency_ms": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 120},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 125},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 130},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 180},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 5400}
+    ],
+    "error_rate_5xx_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 0.05},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 31.8}
+    ]
+  },
+  "search-service": {
+    "cpu_utilization_pct": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 35.0},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 38.0},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 42.0},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 60.0},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 99.4}
+    ],
+    "p99_latency_ms": [
+      {"timestamp": "2026-09-01T10:00:00Z", "value": 85},
+      {"timestamp": "2026-09-01T10:05:00Z", "value": 90},
+      {"timestamp": "2026-09-01T10:10:00Z", "value": 95},
+      {"timestamp": "2026-09-01T10:14:00Z", "value": 350},
+      {"timestamp": "2026-09-01T10:15:00Z", "value": 6200}
+    ]
+  },
+  "user-service": {
+    "error_rate_5xx_pct": [
+      {"timestamp": "2026-09-01T10:30:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T10:40:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T10:50:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T10:58:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T11:00:00Z", "value": 61.2}
+    ]
+  },
+  "billing-service": {
+    "error_rate_5xx_pct": [
+      {"timestamp": "2026-09-01T10:30:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T10:40:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T10:50:00Z", "value": 0.01},
+      {"timestamp": "2026-09-01T10:58:00Z", "value": 0.02},
+      {"timestamp": "2026-09-01T11:00:00Z", "value": 18.4}
+    ]
+  },
+  "web-store": {
+    "cpu_utilization_pct": [
+      {"timestamp": "2026-09-01T10:50:00Z", "value": 18.0},
+      {"timestamp": "2026-09-01T10:55:00Z", "value": 19.5},
+      {"timestamp": "2026-09-01T11:00:00Z", "value": 21.0},
+      {"timestamp": "2026-09-01T11:01:00Z", "value": 45.0},
+      {"timestamp": "2026-09-01T11:02:00Z", "value": 48.0}
+    ],
+    "memory_utilization_pct": [
+      {"timestamp": "2026-09-01T10:50:00Z", "value": 42.0},
+      {"timestamp": "2026-09-01T10:55:00Z", "value": 42.5},
+      {"timestamp": "2026-09-01T11:00:00Z", "value": 43.0},
+      {"timestamp": "2026-09-01T11:01:00Z", "value": 45.0},
+      {"timestamp": "2026-09-01T11:02:00Z", "value": 45.2}
+    ],
+    "error_rate_5xx_pct": [
+      {"timestamp": "2026-09-01T10:50:00Z", "value": 0.0},
+      {"timestamp": "2026-09-01T10:55:00Z", "value": 0.0},
+      {"timestamp": "2026-09-01T11:00:00Z", "value": 0.05},
+      {"timestamp": "2026-09-01T11:01:00Z", "value": 84.2},
+      {"timestamp": "2026-09-01T11:02:00Z", "value": 88.5}
+    ],
+    "p99_latency_ms": [
+      {"timestamp": "2026-09-01T10:50:00Z", "value": 120},
+      {"timestamp": "2026-09-01T10:55:00Z", "value": 125},
+      {"timestamp": "2026-09-01T11:00:00Z", "value": 130},
+      {"timestamp": "2026-09-01T11:01:00Z", "value": 310},
+      {"timestamp": "2026-09-01T11:02:00Z", "value": 340}
+    ],
+    "requests_per_sec": [
+      {"timestamp": "2026-09-01T10:50:00Z", "value": 450},
+      {"timestamp": "2026-09-01T10:55:00Z", "value": 460},
+      {"timestamp": "2026-09-01T11:00:00Z", "value": 470},
+      {"timestamp": "2026-09-01T11:01:00Z", "value": 420},
+      {"timestamp": "2026-09-01T11:02:00Z", "value": 390}
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+2026-09-01T09:45:10.012Z [INFO] [payment-gateway] [worker-1] c.e.p.GatewayRouter - Upstream processor Stripe latency: 145ms
+2026-09-01T09:50:22.440Z [INFO] [payment-gateway] [worker-3] c.e.p.GatewayRouter - Upstream processor PayPal latency: 180ms
+2026-09-01T09:55:01.899Z [INFO] [payment-gateway] [worker-2] c.e.p.TokenService - Token validation healthy, cache hit ratio: 94.2%
+2026-09-01T10:00:15.112Z [INFO] [payment-gateway] [worker-4] c.e.p.TransactionManager - Processed charge txn_7719283 for $49.99 (Stripe)
+2026-09-01T10:05:33.721Z [WARN] [payment-gateway] [rate-limiter] c.e.p.RateLimiter - Approaching rate limit on secondary acquirer: 850/1000 req/min
+2026-09-01T10:08:44.200Z [WARN] [payment-gateway] [worker-2] c.e.p.GatewayRouter - Upstream processor PayPal returned HTTP 429 Too Many Requests. Retrying with exponential backoff (attempt 1/3)
+2026-09-01T10:08:45.300Z [INFO] [payment-gateway] [worker-2] c.e.p.GatewayRouter - Retry successful on secondary acquirer for txn_7719302
+2026-09-01T10:15:00.000Z [INFO] [payment-gateway] [main] c.e.p.PaymentApplication - Deployment completed for version v1.5.2. PayPal timeout config updated.
+2026-09-01T10:30:12.441Z [ERROR] [payment-gateway] [worker-1] c.e.p.StripeClient - Failed to charge payment source: Upstream Stripe service unavailable
+com.ecommerce.payment.exception.UpstreamGatewayException: 503 Service Unavailable from https://api.stripe.com/v1/charges
+	at com.ecommerce.payment.client.StripeClient.charge(StripeClient.java:94)
+	at com.ecommerce.payment.service.PaymentService.processPayment(PaymentService.java:112)
+2026-09-01T10:30:45.102Z [ERROR] [payment-gateway] [worker-3] c.e.p.StripeClient - Failed to charge payment source: Upstream Stripe service unavailable
+com.ecommerce.payment.exception.UpstreamGatewayException: 503 Service Unavailable from https://api.stripe.com/v1/charges
+	at com.ecommerce.payment.client.StripeClient.charge(StripeClient.java:94)
+	at com.ecommerce.payment.service.PaymentService.processPayment(PaymentService.java:112)
+2026-09-01T10:31:00.220Z [ERROR] [payment-gateway] [worker-2] c.e.p.StripeClient - Upstream gateway timeout
+com.ecommerce.payment.exception.UpstreamGatewayException: 503 Service Unavailable from https://api.stripe.com/v1/charges
+	at com.ecommerce.payment.client.StripeClient.charge(StripeClient.java:94)
+	at com.ecommerce.payment.service.PaymentService.processPayment(PaymentService.java:112)

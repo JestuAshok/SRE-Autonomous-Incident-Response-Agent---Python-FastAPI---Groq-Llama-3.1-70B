@@ -1,0 +1,17 @@
+2026-09-01T11:50:00.000Z [INFO] [cloudflare-edge] [master] c.c.e.NginxMaster - Edge proxy router active across 200 data centers. Routing 18,500,000 req/sec.
+2026-09-01T11:55:00.000Z [INFO] [cloudflare-edge] [master] c.c.w.RuleEngine - WAF rule compiler checking rule signatures. Status: HEALTHY.
+2026-09-01T12:00:00.000Z [INFO] [cloudflare-edge] [master] c.c.w.RuleEngine - Deployed WAF managed rule set waf-rules-v2.19.0. Active regex rules: 4,812. Commit cf91a02 by waf-team@cloudflare.com.
+2026-09-01T12:01:14.200Z [WARN] [cloudflare-edge] [worker-3] c.c.e.NginxWorker - Worker CPU utilization exceeds 95%: regex evaluation queue depth 14,020
+2026-09-01T12:01:25.801Z [ERROR] [cloudflare-edge] [worker-7] c.c.e.NginxWorker - HTTP 502 Bad Gateway: worker execution timed out evaluating managed rule 100018
+LuaRegexTimeoutException: Catastrophic regular expression backtracking detected evaluating rule 100018: ".*.*=.*"
+	at com.cloudflare.waf.rules.ManagedRulesEngine.evaluate(ManagedRulesEngine.lua:214)
+	at com.cloudflare.edge.proxy.NginxWorker.handleRequest(NginxWorker.lua:88)
+2026-09-01T12:01:38.110Z [ERROR] [cloudflare-edge] [worker-2] c.c.e.NginxWorker - HTTP 502 Bad Gateway: worker execution timed out evaluating managed rule 100018
+LuaRegexTimeoutException: Catastrophic regular expression backtracking detected evaluating rule 100018: ".*.*=.*"
+	at com.cloudflare.waf.rules.ManagedRulesEngine.evaluate(ManagedRulesEngine.lua:214)
+	at com.cloudflare.edge.proxy.NginxWorker.handleRequest(NginxWorker.lua:88)
+2026-09-01T12:01:50.450Z [ERROR] [cloudflare-edge] [worker-5] c.c.e.NginxWorker - HTTP 502 Bad Gateway: worker execution timed out evaluating managed rule 100018
+LuaRegexTimeoutException: Catastrophic regular expression backtracking detected evaluating rule 100018: ".*.*=.*"
+	at com.cloudflare.waf.rules.ManagedRulesEngine.evaluate(ManagedRulesEngine.lua:214)
+	at com.cloudflare.edge.proxy.NginxWorker.handleRequest(NginxWorker.lua:88)
+2026-09-01T12:02:10.000Z [ERROR] [cloudflare-edge] [telemetry] c.c.e.HealthMonitor - Global 502 spike: edge proxy error rate at 88.5%, all worker cores at 100% CPU

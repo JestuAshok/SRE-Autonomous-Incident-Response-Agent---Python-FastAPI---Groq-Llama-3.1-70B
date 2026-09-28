@@ -1,0 +1,16 @@
+2026-09-01T04:00:00.000Z [INFO] [crowdstrike-sensor] [kernel-worker] c.c.f.SensorDriver - Sensor kernel extension loaded (build csagent-v7.14.0). Monitoring 12,400 process events/sec.
+2026-09-01T04:05:00.000Z [INFO] [crowdstrike-sensor] [ipc-channel] c.c.f.ChannelManager - IPC communication healthy with Falcon management agent. Heartbeat 200 OK.
+2026-09-01T04:09:00.000Z [INFO] [crowdstrike-sensor] [updater] c.c.f.ChannelManager - Deployment completed for channel-file-291. Updated 21 content evaluation fields for rapid response detection.
+2026-09-01T04:10:15.102Z [ERROR] [crowdstrike-sensor] [kernel-worker] c.c.f.SensorDriver - Host kernel panic: BugCheck 0x50 PAGE_FAULT_IN_NONPAGED_AREA at csagent.sys:184
+KernelAccessViolation: BugCheck 0x50 PAGE_FAULT_IN_NONPAGED_AREA (0xFFFF800012345678, 0x0000000000000000, 0xFFFFF80023456789, 0x0000000000000002)
+	at com.crowdstrike.falcon.kernel.SensorDriver.processIPC(csagent.sys:184)
+	at com.crowdstrike.falcon.sensor.ChannelManager.evaluateRules(ChannelManager.sys:62)
+2026-09-01T04:10:22.441Z [ERROR] [crowdstrike-sensor] [kernel-worker] c.c.f.SensorDriver - Host kernel panic: BugCheck 0x50 PAGE_FAULT_IN_NONPAGED_AREA at csagent.sys:184
+KernelAccessViolation: BugCheck 0x50 PAGE_FAULT_IN_NONPAGED_AREA (0xFFFF800012345678, 0x0000000000000000, 0xFFFFF80023456789, 0x0000000000000002)
+	at com.crowdstrike.falcon.kernel.SensorDriver.processIPC(csagent.sys:184)
+	at com.crowdstrike.falcon.sensor.ChannelManager.evaluateRules(ChannelManager.sys:62)
+2026-09-01T04:10:45.890Z [ERROR] [crowdstrike-sensor] [kernel-worker] c.c.f.SensorDriver - Host kernel panic: BugCheck 0x50 PAGE_FAULT_IN_NONPAGED_AREA at csagent.sys:184
+KernelAccessViolation: BugCheck 0x50 PAGE_FAULT_IN_NONPAGED_AREA (0xFFFF800012345678, 0x0000000000000000, 0xFFFFF80023456789, 0x0000000000000002)
+	at com.crowdstrike.falcon.kernel.SensorDriver.processIPC(csagent.sys:184)
+	at com.crowdstrike.falcon.sensor.ChannelManager.evaluateRules(ChannelManager.sys:62)
+2026-09-01T04:11:00.112Z [ERROR] [crowdstrike-sensor] [watchdog] c.c.f.WatchdogService - Endpoint crash loop detected: 8,420 agents reported unexpected kernel reboot in past 60s
